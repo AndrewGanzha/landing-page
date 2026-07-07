@@ -1,0 +1,81 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CatLogo from "../components/CatLogo.astro";
+import SocialIcons from "../components/SocialIcons.astro";
+
+const stack = ["Python", "FastAPI", "PostgreSQL", "Docker", "REST APIs"];
+---
+
+<Layout title="HELL WORLD — Backend Developer">
+  <section class="hero">
+    <div class="container hero__inner">
+      <CatLogo class="hero__mark" />
+      <p class="eyebrow">Backend Developer</p>
+      <h1 class="hero__name">HELL WORLD</h1>
+      <p class="hero__role">Python &amp; FastAPI specialist</p>
+
+      <p class="hero__bio">
+        I design and build backend systems that stay reliable under real-world load — APIs, data
+        pipelines, and the infrastructure that keeps them running. Python and FastAPI are my daily
+        tools of choice for turning complex requirements into fast, maintainable services.
+      </p>
+
+      <ul class="stack">
+        {stack.map((item) => <li class="tag">{item}</li>)}
+      </ul>
+
+      <SocialIcons />
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    display: flex;
+    align-items: center;
+    min-height: calc(100vh - 72px - 88px);
+    padding: 64px 0;
+  }
+
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  :global(.hero__mark) {
+    width: 64px;
+    height: 64px;
+    color: var(--color-red);
+    filter: drop-shadow(0 0 24px rgba(112, 27, 27, 0.55));
+    margin-bottom: 8px;
+  }
+
+  .hero__name {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1;
+  }
+
+  .hero__role {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--color-text-dim);
+  }
+
+  .hero__bio {
+    max-width: 56ch;
+    color: var(--color-text-dim);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    margin: 6px 0 12px;
+    padding: 0;
+  }
+</style>

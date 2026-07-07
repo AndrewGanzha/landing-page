@@ -1,0 +1,153 @@
+---
+import CatLogo from "../components/CatLogo.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Backend developer specializing in Python and FastAPI." } = Astro.props;
+const { pathname } = Astro.url;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const homeHref = `${base}/`;
+const blogHref = `${base}/blog`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href={homeHref}>
+          <CatLogo class="brand__mark" />
+          <span class="brand__name">HELL WORLD</span>
+        </a>
+        <nav class="site-nav">
+          <a href={homeHref} aria-current={pathname === base ? "page" : undefined}>Home</a>
+          <a href={blogHref} aria-current={pathname.startsWith(blogHref) ? "page" : undefined}>Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <CatLogo class="site-footer__mark" />
+        <span>&copy; {new Date().getFullYear()} HELL WORLD. All rights reserved.</span>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(5, 5, 5, 0.8);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  :global(.brand__mark) {
+    width: 44px;
+    height: 44px;
+    color: var(--color-red);
+  }
+
+  .brand__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 0.95rem;
+  }
+
+  .site-nav {
+    display: flex;
+    gap: 28px;
+  }
+
+  .site-nav a {
+    position: relative;
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+    padding-bottom: 4px;
+  }
+
+  .site-nav a:hover {
+    color: var(--color-text);
+  }
+
+  .site-nav a[aria-current="page"] {
+    color: var(--color-text);
+  }
+
+  .site-nav a[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--color-red);
+  }
+
+  main {
+    position: relative;
+    z-index: 3;
+    min-height: calc(100vh - 72px - 88px);
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 88px;
+    color: var(--color-text-dim);
+    font-size: 0.8rem;
+  }
+
+  :global(.site-footer__mark) {
+    width: 18px;
+    height: 18px;
+    color: var(--color-gray);
+  }
+</style>
