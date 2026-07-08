@@ -17,7 +17,8 @@ const links = [
   },
   {
     label: "Email",
-    href: "andrewganzha.work@gmail.com",
+    href: "mailto:andrewganzha.work@gmail.com",
+    external: false,
     icon: "M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm1.2 2 8.8 6.6L20.8 6H3.2ZM3 7.9V18h18V7.9l-9 6.75L3 7.9Z",
   },
 ];
@@ -27,7 +28,13 @@ const links = [
   {
     links.map((link) => (
       <li>
-        <a href={link.href} aria-label={link.label} title={link.label} target="_blank" rel="noopener noreferrer">
+        <a
+          href={link.href}
+          aria-label={link.label}
+          title={link.label}
+          target={link.external === false ? undefined : "_blank"}
+          rel={link.external === false ? undefined : "noopener noreferrer"}
+        >
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d={link.icon} />
           </svg>
