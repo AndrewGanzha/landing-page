@@ -1,0 +1,126 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate } = post.data;
+const { Content } = await render(post);
+
+const formattedDate = pubDate.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<Layout title={`${title} — HELL WORLD`} description={description}>
+  <article class="post">
+    <div class="container">
+      <p class="eyebrow">Writing</p>
+      <h1 class="post__title">{title}</h1>
+      <time class="post__date" datetime={pubDate.toISOString()}>{formattedDate}</time>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .post {
+    padding: 64px 0 96px;
+  }
+
+  .post__title {
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+    margin: 6px 0 14px;
+    line-height: 1.2;
+  }
+
+  .post__date {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text-dim);
+    margin-bottom: 40px;
+  }
+
+  .prose {
+    max-width: 72ch;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  .prose :global(p) {
+    margin: 0 0 1.4em;
+  }
+
+  .prose :global(h2),
+  .prose :global(h3) {
+    margin: 1.6em 0 0.6em;
+    line-height: 1.3;
+  }
+
+  .prose :global(a) {
+    color: var(--color-red-bright);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose :global(strong) {
+    color: var(--color-text);
+  }
+
+  .prose :global(blockquote) {
+    margin: 0 0 1.4em;
+    padding: 0.2em 1.2em;
+    border-left: 2px solid var(--color-red);
+    color: var(--color-text-dim);
+    font-style: italic;
+  }
+
+  .prose :global(code) {
+    font-family: var(--font-body);
+    font-size: 0.88em;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-line);
+    border-radius: 3px;
+    padding: 0.1em 0.4em;
+  }
+
+  .prose :global(pre) {
+    margin: 0 0 1.6em;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid var(--color-line);
+    background: var(--color-bg-elevated) !important;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .prose :global(pre) :global(code) {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 1.4em;
+    padding-left: 1.4em;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 0.4em;
+  }
+</style>
