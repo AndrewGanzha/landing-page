@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate } = post.data;
+const { title, description, pubDate, category } = post.data;
 const { Content } = await render(post);
 
 const formattedDate = pubDate.toLocaleDateString("en-US", {
@@ -25,6 +25,7 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
   <article class="post">
     <div class="container">
       <p class="eyebrow">Writing</p>
+      <span class="post__badge">{category}</span>
       <h1 class="post__title">{title}</h1>
       <time class="post__date" datetime={pubDate.toISOString()}>{formattedDate}</time>
 
@@ -38,6 +39,15 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
 <style>
   .post {
     padding: 64px 0 96px;
+  }
+
+  .post__badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-red-bright);
+    margin-top: 6px;
   }
 
   .post__title {

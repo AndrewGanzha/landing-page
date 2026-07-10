@@ -2,6 +2,7 @@
 title: "Retiring os.environ: teaching AI agents to reach for pydantic-settings"
 description: "A five-minute refactor and a reusable skill were enough to get Codex and Claude to stop reaching for os.environ in our FastAPI templates."
 pubDate: 2026-07-09
+category: Backend
 ---
 
 Two days ago, I was exploring the templates repository on our company's GitLab and found something that I believe should be replaced with a more modern solution.
