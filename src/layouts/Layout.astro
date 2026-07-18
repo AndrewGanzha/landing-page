@@ -12,6 +12,9 @@ const { pathname } = Astro.url;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const homeHref = `${base}/`;
 const blogHref = `${base}/blog`;
+const currentPath = pathname.replace(/\/+$/, "");
+const isHome = currentPath === base;
+const isBlog = currentPath === blogHref || currentPath.startsWith(`${blogHref}/`);
 ---
 
 <html lang="en">
@@ -37,8 +40,8 @@ const blogHref = `${base}/blog`;
           <span class="brand__name">HELL WORLD</span>
         </a>
         <nav class="site-nav">
-          <a href={homeHref} aria-current={pathname === base ? "page" : undefined}>Home</a>
-          <a href={blogHref} aria-current={pathname.startsWith(blogHref) ? "page" : undefined}>Blog</a>
+          <a href={homeHref} aria-current={isHome ? "page" : undefined}>Home</a>
+          <a href={blogHref} aria-current={isBlog ? "page" : undefined}>Blog</a>
         </nav>
       </div>
     </header>
